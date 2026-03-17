@@ -102,8 +102,17 @@ app.get('/', (req, res) => {
 const CALCULATOR_JS = `
 (function() {
   // Seulement sur les pages produit
-  if (!window.location.pathname.includes('/products/')) return;
+if (!window.location.pathname.includes('/products/')) return;
 
+// Vérifier le tag 'Price Calculator' via Shopify
+var hasPriceCalcTag = false;
+try {
+  if (window.ShopifyAnalytics && window.ShopifyAnalytics.meta && window.ShopifyAnalytics.meta.product) {
+    var tags = window.ShopifyAnalytics.meta.product.tags || [];
+    hasPriceCalcTag = tags.includes('Price Calculator');
+  }
+} catch(e) {}
+if (window.location.pathname.includes('/products/') && !hasPriceCalcTag) return;
   var T = {
     en: {
       title:'Price Calculator', banner:'Free shipping · No customs · Canada & United States',
