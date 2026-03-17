@@ -7,12 +7,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ============================================
-// CONFIG — Remplacez avec vos nouvelles clés
-// après avoir fait "Rotate API secret"
+// CONFIG — Les clés sont lues depuis les
+// variables d'environnement Render (sécurisé)
+// Ne jamais mettre les clés directement ici !
 // ============================================
 const CONFIG = {
-  API_KEY: 'VOTRE_NOUVEAU_CLIENT_ID',
-  API_SECRET: 'VOTRE_NOUVEAU_SECRET',
+  API_KEY: process.env.SHOPIFY_API_KEY,
+  API_SECRET: process.env.SHOPIFY_API_SECRET,
   SHOP: 'atelierparc.myshopify.com',
   SCOPES: 'write_script_tags,read_script_tags',
   REDIRECT_URI: 'https://atelierparc-calculator.onrender.com/auth/callback',
